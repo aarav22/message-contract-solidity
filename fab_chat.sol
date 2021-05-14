@@ -4,9 +4,10 @@
     * If a message was flagged  greater than the number of active users
         ** It'll be deleted if non-anonymous
         ** The indenty will be revealed if anonymous
-    * To view all messages, you need to check the logs after executing logAllMessages()
+    * To view all messages, you need to check the logs after executing logAllMessages() -
     * since events are being used to print all messages. 
 */
+/* contract: 0x2D2Ecf6e16321218fE44FD6aca921898254c8C7b */
 
 pragma solidity ^0.4.0;
 pragma experimental ABIEncoderV2;
@@ -58,7 +59,7 @@ contract SendMessage {
         
     
         // If the user wants msg to be anon, 
-        // they must have paid 1 or more ether: 
+        // they must have paid 0.1 or more ether: 
         if(isAnonymous) {
             require(msg.value >= 0.1 ether, "Pay 0.1 or more ether to pay.");
             anonymity = true;
@@ -120,10 +121,8 @@ contract SendMessage {
     function logAllMessages(string userName) public  {
         // if the userName unregistered, send an error
         require(userList[userName].isValid, "User not recognized."); 
-        // string[] messages; 
         uint index = 0;
-        // uint length = 0;
-        
+
         while(index < numMessages) {
             if (!messageList[index].isDeleted) {
                  if (messageList[index].isAnonymous) {
